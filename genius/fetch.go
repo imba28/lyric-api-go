@@ -81,7 +81,23 @@ func scrape(url string) (string, error) {
 		return "", err
 	}
 
-	result := document.Find("[class^=\"Lyrics\"]")
+	selection := document.Find("#lyrics-root").First()
+	var result *goquery.Selection
+	selection.Children().Each(func(i int, child *goquery.Selection) {
+		lyricsContainerVal, found := child.Attr("data-lyrics-container")
+		if found && lyricsContainerVal == "true" {
+			if result == nil {
+				result = child
+			} else {
+				result.AppendSelection(child)
+			}
+		}
+	})
+
+	if result == nil {
+		return "", errors.New("no lyrics container found")
+	}
+
 	return strings.TrimSpace(goquery_helpers.RenderSelection(result, "\n")), nil
 }
 
