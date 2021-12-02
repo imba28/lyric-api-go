@@ -76,12 +76,28 @@ func scrape(url string) (string, error) {
 	defer res.Body.Close()
 
 	// Create a goquery document from the HTTP response
-	document, err := goquery.NewDocumentFromReader(res.Body)
-	if err != nil {
-		return "", err
+	document, err2 := goquery.NewDocumentFromReader(res.Body)
+	if err2 != nil {
+		return "", err2
 	}
 
-	result := document.Find("[class^=\"Lyrics\"]")
+	selection := document.Find("#lyrics-root").First()
+	var result *goquery.Selection
+	selection.Children().Each(func(i int, child *goquery.Selection) {
+		lyricsContainerVal, found := child.Attr("data-lyrics-container")
+		if found && lyricsContainerVal == "true" {
+			if result == nil {
+				result = child
+			} else {
+				result.AppendSelection(child)
+			}
+		}
+	})
+
+	if result == nil {
+		return "", errors.New("no lyrics container found")
+	}
+
 	return strings.TrimSpace(goquery_helpers.RenderSelection(result, "\n")), nil
 }
 
@@ -94,10 +110,10 @@ func (g *Genius) Fetch(artist, song string) (string, error) {
 		return "", err
 	}
 
-	lyric, err := scrape(u)
-	if err != nil {
+	lyric, err2 := scrape(u)
+	if err2 != nil {
 		log.Println("error in genius provider during scraping while attempting genius provider ", err)
-		return "", err
+		return "", err2
 	}
 	return lyric, nil
 }
