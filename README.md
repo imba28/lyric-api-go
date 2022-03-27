@@ -7,8 +7,6 @@ This library provides an API to search for lyrics from various providers.
 ## Supported Providers
 
 - Genius (Requires Setup)
-- MusixMatch (Default)
-- LyricsWikia (Default)
 - SongLyrics (Default)
 
 Please refer to the test files, examples, and [GoDoc](https://godoc.org/github.com/imba28/lyric-api-go) for more details

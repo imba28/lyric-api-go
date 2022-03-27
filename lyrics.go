@@ -4,8 +4,6 @@ import (
 	"errors"
 
 	"github.com/imba28/lyric-api-go/genius"
-	"github.com/imba28/lyric-api-go/lyricswikia"
-	"github.com/imba28/lyric-api-go/musixmatch"
 	"github.com/imba28/lyric-api-go/songlyrics"
 )
 
@@ -15,16 +13,12 @@ type provider interface {
 
 // Supported Providers:
 // Default
-// - Lyrics Wikia	(github.com/imba28/lyric-api-go/lyricswikia)
 // - Song Lyrics	(github.com/imba28/lyric-api-go/songlyrics)
-// - MusixMatch 	(github.com/imba28/lyric-api-go/musixmatch)
 // Require Setup
 // - Genius 		(github.com/imba28/lyric-api-go/genius)
 var (
 	defaultProviders = []provider{
-		lyricswikia.New(),
 		songlyrics.New(),
-		musixmatch.New(),
 	}
 )
 
@@ -46,32 +40,12 @@ func WithAllProviders() Option {
 	}
 }
 
-// WithLyricsWikia is an Option Configuration Decorator that adds
-// Lyrics Wikia Provider to the list of providers to attempt fetching
-// lyrics from.
-func WithLyricsWikia() Option {
-	return func(l Lyric) Lyric {
-		l.providers = append(l.providers, lyricswikia.New())
-		return l
-	}
-}
-
 // WithSongLyrics is an Option Configuration Decorator that adds
 // Song Lyrics Provider to the list of providers to attempt fetching
 // lyrics from.
 func WithSongLyrics() Option {
 	return func(l Lyric) Lyric {
 		l.providers = append(l.providers, songlyrics.New())
-		return l
-	}
-}
-
-// WithMusixMatch is an Option Configuration Decorator that adds
-// Musixmatch Provider to the list of providers to attempt fetching
-// lyrics from.
-func WithMusixMatch() Option {
-	return func(l Lyric) Lyric {
-		l.providers = append(l.providers, musixmatch.New())
 		return l
 	}
 }
