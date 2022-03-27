@@ -1,6 +1,7 @@
 package genius
 
 import (
+	"strconv"
 	"encoding/json"
 	"errors"
 	"io"
@@ -39,7 +40,7 @@ func search(artist, song, accessToken string) (string, error) {
 	defer io.Copy(ioutil.Discard, resp.Body)
 
 	if resp.StatusCode != 200 {
-		return "", errors.New("non 200 error code from API, got " + string(resp.StatusCode) + " : " + resp.Status)
+		return "", errors.New("non 200 error code from API, got " + strconv.Itoa(resp.StatusCode) + " : " + resp.Status)
 	}
 
 	return parse(resp.Body, artist, song)

@@ -47,7 +47,13 @@ func TestFetch(t *testing.T) {
 
 		Convey("Want should be a substring of Got", func() {
 			for _, tt := range tests {
-				So(provider.Fetch(tt.args.artist, tt.args.song), ShouldContainSubstring, tt.want)
+				result, err := provider.Fetch(tt.args.artist, tt.args.song)
+				if len(tt.want) > 0 {
+					So(err, ShouldBeNil)
+				} else {
+					So(err, ShouldBeError)
+				}
+				So(result, ShouldContainSubstring, tt.want)
 			}
 		})
 	})

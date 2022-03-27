@@ -19,11 +19,6 @@ on using the providers.
 ```sh
 go get github.com/imba28/lyric-api-go
 ```
-
-## Usage Example
-
-More examples can be found in the examples directory.
-
 ### Getting Started
 
 Give this library a spin,
