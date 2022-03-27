@@ -3,10 +3,10 @@ package lyrics
 import (
 	"errors"
 
-	"github.com/vladcomp/lyric-api-go/genius"
-	"github.com/vladcomp/lyric-api-go/lyricswikia"
-	"github.com/vladcomp/lyric-api-go/musixmatch"
-	"github.com/vladcomp/lyric-api-go/songlyrics"
+	"github.com/imba28/lyric-api-go/genius"
+	"github.com/imba28/lyric-api-go/lyricswikia"
+	"github.com/imba28/lyric-api-go/musixmatch"
+	"github.com/imba28/lyric-api-go/songlyrics"
 )
 
 type provider interface {
@@ -15,11 +15,11 @@ type provider interface {
 
 // Supported Providers:
 // Default
-// - Lyrics Wikia	(github.com/rhnvrm/lyric-api-go/lyricswikia)
-// - Song Lyrics	(github.com/rhnvrm/lyric-api-go/songlyrics)
-// - MusixMatch 	(github.com/rhnvrm/lyric-api-go/musixmatch)
+// - Lyrics Wikia	(github.com/imba28/lyric-api-go/lyricswikia)
+// - Song Lyrics	(github.com/imba28/lyric-api-go/songlyrics)
+// - MusixMatch 	(github.com/imba28/lyric-api-go/musixmatch)
 // Require Setup
-// - Genius 		(github.com/rhnvrm/lyric-api-go/genius)
+// - Genius 		(github.com/imba28/lyric-api-go/genius)
 var (
 	defaultProviders = []provider{
 		lyricswikia.New(),
